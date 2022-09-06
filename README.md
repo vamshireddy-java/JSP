@@ -229,4 +229,8 @@ File: index.jsp
 <%@ taglib uri="WEB-INF/mytags.tld" prefix="m" %>  
 Current Date and Time is: <m:today/>  
 
+![customtagoutput](https://user-images.githubusercontent.com/112934893/188634095-014bd702-e269-48a8-90b1-c5f106efd39d.jpg)
+
+
+
 
