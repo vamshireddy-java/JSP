@@ -157,7 +157,7 @@ In the above code, we’ve used to taglib directive to point to the JSTL library
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
                                                       Custom Tags in JSP
-                                                      *******************
+                                                      --------------------
 In this example, we are going to create a custom tag that prints the current date and time. We are performing action at the start of tag.
 
 For creating any custom tag, we need to follow following steps:
