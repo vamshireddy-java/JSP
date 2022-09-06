@@ -233,4 +233,75 @@ Current Date and Time is: <m:today/>
 
 
 
+Attributes in JSP Custom Tag:
+-----------------------------
+
+There can be defined too many attributes for any custom tag. To define the attribute, you need to perform two tasks:
+
+1) Define the property in the TagHandler class with the attribute name and define the setter method
+2) define the attribute element inside the tag element in the TLD file
+
+Let's understand the attribute by the tag given below:
+-----------------------------------------------------
+
+<m:cube number="4"></m:cube>  
+Here m is the prefix, cube is the tag name and number is the attribute.
+
+Simple example of attribute in JSP Custom Tag
+---------------------------------------
+
+In this example, we are going to use the cube tag which return the cube of any given number. Here, we are defining the number attribute for the cube tag. We are using the three file here:
+
+
+-> index.jsp
+-> CubeNumber.java
+-> mytags.tld
+
+index.jsp
+---------
+<%@ taglib uri="WEB-INF/mytags.tld" prefix="m" %>  
+Cube of 4 is: <m:cube number="4"></m:cube>  
+
+CubeNumber.java
+-------------------
+package com.javatpoint.taghandler;  
+import javax.servlet.jsp.JspException;  
+import javax.servlet.jsp.JspWriter;  
+import javax.servlet.jsp.tagext.TagSupport;  
+  
+public class CubeNumber extends TagSupport{  
+private int number;  
+      
+public void setNumber(int number) {  
+    this.number = number;  
+}  
+  
+public int doStartTag() throws JspException {  
+    JspWriter out=pageContext.getOut();  
+    try{  
+        out.print(number*number*number);  
+    }catch(Exception e){e.printStackTrace();}  
+      
+    return SKIP_BODY;  
+}  
+}  
+
+
+mytags.tld
+---------
+
+ <tag>  
+    <name>cube</name>  
+    <tag-class>com.javatpoint.taghandler.CubeNumber</tag-class>  
+    <attribute>  
+    <name>number</name>  
+    <required>true</required>  
+    </attribute>  
+  </tag>  
+  
+  
+
+
+
+
 
