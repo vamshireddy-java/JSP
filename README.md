@@ -10,14 +10,18 @@ Directives can have a number of attributes which you can list down as key-value 
 Different types of JSP directives : 
 There are three different JSP directives available. They are as follows: 
 
-Page Directives : JSP page directive is used to define the properties applying the JSP page, such as the size of the allocated buffer, imported packages and classes/interfaces, defining what type of page it is etc. The syntax of JSP page directive is as follows: 
+Page Directives :
+-----------------
+JSP page directive is used to define the properties applying the JSP page, such as the size of the allocated buffer, imported packages and classes/interfaces, defining what type of page it is etc. The syntax of JSP page directive is as follows: 
  
 <%@page attribute = "value"%>
 Different properties/attributes : 
 The following are the different properties that can be defined using page directive :
 
 
-import: This tells the container what packages/classes are needed to be imported into the program.
+import:
+-------
+This tells the container what packages/classes are needed to be imported into the program.
 Syntax:
 <%@page import = "value"%>
 Example : 
@@ -30,7 +34,9 @@ Example :
 Output: 
 
 
-contentType: This defines the format of data that is being exchanged between the client and the server. It does the same thing as the setContentType method in servlet used to.
+contentType:
+-------------
+This defines the format of data that is being exchanged between the client and the server. It does the same thing as the setContentType method in servlet used to.
 Syntax:
 <%@page contentType="value"%>
 Usage Example: 
@@ -56,7 +62,9 @@ Usage Example:
 Output: 
 
 
-buffer: Defines the size of the buffer that is allocated for handling the JSP page. The size is defined in Kilo Bytes.
+buffer: 
+-------
+Defines the size of the buffer that is allocated for handling the JSP page. The size is defined in Kilo Bytes.
 Syntax: 
 <%@page buffer = "size in kb"%>
 language: Defines the scripting language used in the page. By default, this attribute contains the value ‘java’.
@@ -77,7 +85,9 @@ Output:
 (blank page) 
 
 
-errorPage: Defines which page to redirect to, in case the current page encounters an exception. 
+errorPage: 
+----------
+Defines which page to redirect to, in case the current page encounters an exception. 
 Syntax:
 <%@page errorPage = "true/false"%>
 Usage Example: 
@@ -92,7 +102,9 @@ int z = 1/0;
  // result
 out.print("division of numbers is: " + z);  
 %> 
-isErrorPage: It classifies whether the page is an error page or not. By classifying a page as an error page, it can use the implicit object ‘exception’ which can be used to display exceptions that have occurred.
+isErrorPage:
+------------
+It classifies whether the page is an error page or not. By classifying a page as an error page, it can use the implicit object ‘exception’ which can be used to display exceptions that have occurred.
 Syntax:
 <%@page isErrorPage="true/false"%>
 Usage example: 
@@ -108,6 +120,7 @@ Output:
 
 
 Include directive : 
+-------------------
 JSP include directive is used to include other files into the current jsp page. These files can be html files, other sp files etc. The advantage of using an include directive is that it allows code re-usability.
 The syntax of an include directive is as follows: 
  
@@ -125,7 +138,10 @@ index.jsp
 Output : 
 
 
-Taglib Directive : The taglib directive is used to mention the library whose custom-defined tags are being used in the JSP page. It’s major application is JSTL(JSP standard tag library). 
+Taglib Directive :
+-----------------
+
+The taglib directive is used to mention the library whose custom-defined tags are being used in the JSP page. It’s major application is JSTL(JSP standard tag library). 
 Syntax: 
 <@%taglib uri = "library url" prefix="the prefix to 
 identify the tags of this library with"%>
@@ -138,3 +154,77 @@ prefix = "c" %>
    
 <c:out value = "${'This is Sparta'}"/>
 In the above code, we’ve used to taglib directive to point to the JSTL library which is a set of some custom-defined tags in JSP that can be used in place of the scirptlet tag (<%..%>). The prefix attribute is used to define the prefix that is used to identify the tags of this library. Here, the prefix c is used in the <c:out> tag to tell the container that this tag belongs to the library mentioned above.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                      Custom Tags in JSP
+                                                      *******************
+In this example, we are going to create a custom tag that prints the current date and time. We are performing action at the start of tag.
+
+For creating any custom tag, we need to follow following steps:
+
+-> Create the Tag handler class and perform action at the start or at the end of the tag.
+-> Create the Tag Library Descriptor (TLD) file and define tags
+-> Create the JSP file that uses the Custom tag defined in the TLD file     
+
+Understanding flow of custom tag in jsp:
+----------------------------------------
+![customtagflow](https://user-images.githubusercontent.com/112934893/188632876-8c6d9a48-8271-498e-b189-89d6ef21c623.jpg)
+
+
+1) Create the Tag handler class
+
+To create the Tag Handler, we are inheriting the TagSupport class and overriding its method doStartTag().To write data for the jsp, we need to use the JspWriter class.
+
+The PageContext class provides getOut() method that returns the instance of JspWriter class. TagSupport class provides instance of pageContext bydefault.
+
+
+package com.javatpoint.sonoo;  
+import java.util.Calendar;  
+import javax.servlet.jsp.JspException;  
+import javax.servlet.jsp.JspWriter;  
+import javax.servlet.jsp.tagext.TagSupport;  
+public class MyTagHandler extends TagSupport{  
+  
+public int doStartTag() throws JspException {  
+    JspWriter out=pageContext.getOut();//returns the instance of JspWriter  
+    try{  
+     out.print(Calendar.getInstance().getTime());//printing date and time using JspWriter  
+    }catch(Exception e){System.out.println(e);}  
+    return SKIP_BODY;//will not evaluate the body content of the tag  
+}  
+}  
+
+2) Create the TLD file
+
+Tag Library Descriptor (TLD) file contains information of tag and Tag Hander classes. It must be contained inside the WEB-INF directory.
+
+
+<?xml version="1.0" encoding="ISO-8859-1" ?>  
+<!DOCTYPE taglib  
+        PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"  
+    "http://java.sun.com/j2ee/dtd/web-jsptaglibrary_1_2.dtd">  
+  
+<taglib>  
+  
+  <tlib-version>1.0</tlib-version>  
+  <jsp-version>1.2</jsp-version>  
+  <short-name>simple</short-name>  
+  <uri>http://tomcat.apache.org/example-taglib</uri>  
+  
+<tag>  
+<name>today</name>  
+<tag-class>com.javatpoint.sonoo.MyTagHandler</tag-class>  
+</tag>  
+</taglib>  
+
+3) Create the JSP file
+
+Let's use the tag in our jsp file. Here, we are specifying the path of tld file directly. But it is recommended to use the uri name instead of full path of tld file. We will learn about uri later.
+
+It uses taglib directive to use the tags defined in the tld file.
+
+File: index.jsp
+<%@ taglib uri="WEB-INF/mytags.tld" prefix="m" %>  
+Current Date and Time is: <m:today/>  
+
+
