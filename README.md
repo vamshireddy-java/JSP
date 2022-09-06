@@ -233,7 +233,7 @@ Current Date and Time is: <m:today/>
 
 
 
-Attributes in JSP Custom Tag:
+Attributes in JSP Custom Tag:  https://www.javatpoint.com/attributes-in-jsp-custom-tag
 -----------------------------
 
 There can be defined too many attributes for any custom tag. To define the attribute, you need to perform two tasks:
