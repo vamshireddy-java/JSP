@@ -1,1 +1,140 @@
 # JSP
+
+
+JSP directives are the elements of a JSP source code that guide the web container on how to translate the JSP page into it’s respective servlet. 
+Syntax :
+ @
+
+<%@ directive attribute = "value"%>
+Directives can have a number of attributes which you can list down as key-value pairs and separated by commas. The blanks between the @ symbol and the directive name, and between the last attribute and the closing %>, are optional. 
+Different types of JSP directives : 
+There are three different JSP directives available. They are as follows: 
+
+Page Directives : JSP page directive is used to define the properties applying the JSP page, such as the size of the allocated buffer, imported packages and classes/interfaces, defining what type of page it is etc. The syntax of JSP page directive is as follows: 
+ 
+<%@page attribute = "value"%>
+Different properties/attributes : 
+The following are the different properties that can be defined using page directive :
+
+
+import: This tells the container what packages/classes are needed to be imported into the program.
+Syntax:
+<%@page import = "value"%>
+Example : 
+<%-- JSP code to demonstrate how to use page
+ directive to import a package --%>
+ 
+<%@page import = "java.util.Date"%>
+<%Date d = new Date();%>
+<%=d%>
+Output: 
+
+
+contentType: This defines the format of data that is being exchanged between the client and the server. It does the same thing as the setContentType method in servlet used to.
+Syntax:
+<%@page contentType="value"%>
+Usage Example: 
+
+<%-- JSP code to demonstrate how to use
+page directive to set the type of content --%>
+ 
+<%@page contentType = "text/html" %>
+<% = "This is sparta" %>
+Output : 
+
+
+info: Defines the string which can be printed using the ‘getServletInfo()’ method.
+Syntax:
+<%@page info="value"%>
+Usage Example: 
+
+<%-- JSP code to demonstrate how to use page
+ directive to set the page information --%>
+ 
+<%@page contentType = "text/html" %>
+<% = getServletInfo()%>
+Output: 
+
+
+buffer: Defines the size of the buffer that is allocated for handling the JSP page. The size is defined in Kilo Bytes.
+Syntax: 
+<%@page buffer = "size in kb"%>
+language: Defines the scripting language used in the page. By default, this attribute contains the value ‘java’.
+isELIgnored: This attribute tells if the page supports expression language. By default, it is set to false. If set to true, it will disable expression language.
+Syntax:
+<%@page isElIgnored = "true/false"%>
+Usage Example: 
+
+<%-- JSP code to demonstrate how to use page
+directive to ignore expression language --%>
+ 
+<%@page contentType = "text/html" %>
+<%@page isELIgnored = "true"%>
+<body bgcolor = "blue">
+<c:out value = "${'This is sparta}"/>
+</body>
+Output: 
+(blank page) 
+
+
+errorPage: Defines which page to redirect to, in case the current page encounters an exception. 
+Syntax:
+<%@page errorPage = "true/false"%>
+Usage Example: 
+
+//JSP code to divide two numbers
+<%@ page errorPage = "error.jsp" %> 
+ 
+<%  
+// dividing the numbers
+int z = 1/0; 
+ 
+ // result
+out.print("division of numbers is: " + z);  
+%> 
+isErrorPage: It classifies whether the page is an error page or not. By classifying a page as an error page, it can use the implicit object ‘exception’ which can be used to display exceptions that have occurred.
+Syntax:
+<%@page isErrorPage="true/false"%>
+Usage example: 
+
+//JSP code for error page, which displays the exception
+<%@ page isErrorPage = "true" %> 
+    
+<h1>Exception caught</h1> 
+    
+The exception is: <% = exception %>
+Output:
+Output: 
+
+
+Include directive : 
+JSP include directive is used to include other files into the current jsp page. These files can be html files, other sp files etc. The advantage of using an include directive is that it allows code re-usability.
+The syntax of an include directive is as follows: 
+ 
+<@%include file = "file location"%>
+Usage example: 
+In the following code, we’re including the contents of an html file into a jsp page.
+a.html 
+
+<h1>This is the content of a.html</h1>
+index.jsp 
+
+<% = Local content%>
+<%@include file = "a.html"%>
+<% = local content%>
+Output : 
+
+
+Taglib Directive : The taglib directive is used to mention the library whose custom-defined tags are being used in the JSP page. It’s major application is JSTL(JSP standard tag library). 
+Syntax: 
+<@%taglib uri = "library url" prefix="the prefix to 
+identify the tags of this library with"%>
+Usage Example: 
+
+<%-- JSP code to demonstrate
+taglib directive--%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core"
+prefix = "c" %> 
+   
+<c:out value = "${'This is Sparta'}"/>
+In the above code, we’ve used to taglib directive to point to the JSTL library which is a set of some custom-defined tags in JSP that can be used in place of the scirptlet tag (<%..%>). The prefix attribute is used to define the prefix that is used to identify the tags of this library. Here, the prefix c is used in the <c:out> tag to tell the container that this tag belongs to the library mentioned above.
