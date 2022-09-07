@@ -299,8 +299,35 @@ mytags.tld
     </attribute>  
   </tag>  
   
-  
+JSP implicit objects
+---------------------
 
+https://www.geeksforgeeks.org/jsp-application-implicit-objects/
+
+
+redirect from one page to another in jsp: https://www.tutorialspoint.com/jsp/jsp_page_redirect.htm
+----------------------------------------
+
+Page redirection is generally used when a document moves to a new location and we need to send the client to this new location. This can be because of load balancing, or for simple randomization.
+
+The simplest way of redirecting a request to another page is by using sendRedirect() method of response object. Following is the signature of this method −
+
+public void response.sendRedirect(String location)
+throws IOException 
+This method sends back the response to the browser along with the status code and new page location. You can also use the setStatus() and the setHeader() methods together to achieve the same redirection example −
+
+....
+String site = "http://www.newpage.com" ;
+response.setStatus(response.SC_MOVED_TEMPORARILY);
+response.setHeader("Location", site); 
+....
+  
+Java Filters | Servlet Filters
+------------------------------
+
+
+https://www.geeksforgeeks.org/java-servlet-filter/
+  
 
 
 
